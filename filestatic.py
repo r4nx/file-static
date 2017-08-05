@@ -49,8 +49,8 @@ def main():
         config.read(CONFIG_FILE_NAME)
     else:
         # Default config
-        config['Detection'] = {'file': '',
-                               'additional_file': '',
+        config['Detection'] = {'files': '',
+                               'additional_files': '',
                                'event_type': '',
                                'action': '',
                                'delay': '',
