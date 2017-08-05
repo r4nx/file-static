@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# <one line to give the program's name and a brief idea of what it does.>
-# Copyright (C) <year>  <name of author>
+# File Static - simple file event-action script.
+# Copyright (C) 2017  Ranx
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
