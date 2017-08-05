@@ -40,12 +40,10 @@ except ImportError:
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old)
 
-
 CONFIG_FILE_NAME = 'filestatic.ini'
 
-def main():
 
-    # Config loading
+def main():
     config = configparser.RawConfigParser(allow_no_value=True)
     if os.path.isfile(CONFIG_FILE_NAME):
         config.read(CONFIG_FILE_NAME)
@@ -55,7 +53,7 @@ def main():
                                'additional_file': '',
                                'event_type': '',
                                'action': '',
-                               'interval': '',
+                               'delay': '',
                                'loop': ''}
 
         with open(CONFIG_FILE_NAME, 'w') as f:
@@ -68,7 +66,7 @@ def main():
     additional_files = shlex.split(config.get('Detection', 'additional_files'))
     event_type = config.get('Detection', 'event_type')
     action = config.get('Detection', 'action')
-    interval = config.getfloat('Detection', 'interval')
+    delay = config.getfloat('Detection', 'delay')
     loop = config.getboolean('Detection', 'loop')
     is_looping = True
 
@@ -81,7 +79,7 @@ def main():
                     perform_action(action, file, additional_file)
                     if not loop:
                         is_looping = False
-            sleep(interval)
+            sleep(delay)
 
     elif event_type == 'create':
         while is_looping:
@@ -92,7 +90,7 @@ def main():
                     perform_action(action, file, additional_file)
                     if not loop:
                         is_looping = False
-            sleep(interval)
+            sleep(delay)
 
     elif event_type == 'remove':
         while is_looping:
@@ -103,7 +101,7 @@ def main():
                     perform_action(action, file, additional_file)
                     if not loop:
                         is_looping = False
-            sleep(interval)
+            sleep(delay)
 
     elif event_type == 'modify/remove':
         while is_looping:
@@ -114,6 +112,7 @@ def main():
                     perform_action(action, file, additional_file)
                     if not loop:
                         is_looping = False
+            sleep(delay)
 
     else:
         print('Unknown event type: %s' % event_type)
