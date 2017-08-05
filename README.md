@@ -5,6 +5,48 @@ For example you can configure script to remove certain file if it was created ev
 
 ---
 
+Usage
+=====
+First of all, after first start of script you need to edit the config file - _filestatic.ini_.
+Then start script again. That's all, if there are no errors - script is working. When action would be performed -
+File Static print _Action performed!_ in console.
+
+How can I use File Static?
+----------------------------
+### Replacing, adding new files
+One of the ways of using File Static is bypassing verifying of game files integrity.
+For example: game compare its files with files on server every time it starts. If the local file and file on server
+are different - game downloads required file from server.
+So, how to bypass this verifying? If you need to replace original file - replace original file
+with your modified file or if you want to add new file - copy modified file to the game path.
+Then configure File Static like this:
+```ini
+[Detection]
+files = path/to/original_file.txt
+additional_files = path/to/modified_file.txt
+event_type = modify/remove
+action = copy
+interval = 0.3
+loop = false
+```
+What this config doing? If _original_file.txt_ was modified or removed - File Static replaces _original_file.txt_
+with _modified_file.txt_ and shuts down.
+
+### Removing files
+File Static also can instantly delete files once they have been created, for this use the following configuration:
+```ini
+[Detection]
+files = file_to_remove.txt
+additional_files = 
+event_type = create
+action = remove
+interval = 0.01
+loop = true
+```
+Just run File Static and specified files would be deleted immediately.
+
+---
+
 Configuration
 =============
 Option           | Type    | Description
@@ -25,6 +67,8 @@ File Static supports both single file and multiple files for processing.
 To specify multiple files separate their with space. If file name contains spaces - enclose the file name in doublequotes.  
 Example:
 `files = "File 1.txt" "File 2.txt" "File 3.txt"`
+
+**Warning! Disable _loop_ option if specified multiple files!**
 
 You can also specify multiple additional files if you specified multiple files for processing.
 If count of _additional_files_ is less than count of _files_ - first additional file would be applied to all _files_.
